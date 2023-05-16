@@ -2,10 +2,12 @@ package sg.edu.np.mad.madpractical2;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 public class MainActivity extends AppCompatActivity {
@@ -18,15 +20,15 @@ public class MainActivity extends AppCompatActivity {
         Log.v(TITLE, "Create!");
 
         User myUser =  new User();
-        myUser.getUserName();
-        myUser.getUserDescription();
+        myUser.userName = "MAD";
 
-        // myUser.setUserFollowed(false);
         myUser.userFollowed = false;
         myUser.isUserFollowed();
 
         TextView tv = findViewById(R.id.textView2);
-        tv.setText("Hello World!");
+        int randomInt = getIntent().getIntExtra("randomInt", 0);
+        String name = myUser.getUserName();
+        tv.setText(name + " " + randomInt);
 
         TextView tv1 = findViewById(R.id.textView);
         tv1.setText("Lorem ipsum dolor sit amet consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua");
@@ -37,15 +39,16 @@ public class MainActivity extends AppCompatActivity {
         togBut1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Toggle the text and update the follow status
                 if (myUser.isUserFollowed()) {
                     togBut1.setText("Follow");
                     Log.v(TITLE, "Toggle Button: Unfollow clicked!");
                     myUser.setUserFollowed(false);
+                    Toast.makeText(getApplicationContext(), "Unfollowed", Toast.LENGTH_SHORT).show();
                 } else {
                     togBut1.setText("Unfollow");
                     Log.v(TITLE, "Toggle Button: Follow clicked!");
                     myUser.setUserFollowed(true);
+                    Toast.makeText(getApplicationContext(), "Followed", Toast.LENGTH_SHORT).show();
                 }
             }
         });
